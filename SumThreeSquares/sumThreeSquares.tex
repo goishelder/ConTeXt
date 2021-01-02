@@ -1,0 +1,38 @@
+\starttext
+	\defineMPinstance
+		[sumThreeSquare]
+		[format=metafun, extensions=yes, initializations=yes]
+	\startMPdefinitions{sumThreeSquare}
+		def draw_triangle (expr a,b,c,u) =
+			begingroup; save aa,bb,cc;
+			aa:=a*u; bb=b*u; cc:=c*u;
+			draw unitsquare scaled aa;
+			draw unitsquare scaled bb shifted (aa,-bb);
+			transform t; t:=identity rotated angle (aa,bb) shifted (aa,aa);
+			draw unitsquare scaled cc transformed t;
+			z0=((cc,0) transformed t); z1=(aa+bb,0); z2=z0-z1;
+			draw (aa,aa)--z1--z0--(x0+y2,y0-x2)--(x1+y2,y1-x2)--z1;
+			if a<4: label ("$"&decimal a&"^2$",(-2u,-2u));
+			else: label ("$"&decimal a&"^2$",(aa/2,aa/2)); fi
+			label ("$"&decimal b&"^2$",(aa+bb/2,-bb/2));
+			label ("$"&decimal c&"^2$",((cc/2,cc/2) transformed t));
+			label ("$2021$",(x1+(y2+x2)/2,y1+(y2-x2)/2));
+			if a<4: draw unitsquare scaled (aa/2) shifted (aa,0);
+			else: draw unitsquare scaled .2cm shifted (aa,0); fi
+			draw unitsquare rotated angle (bb,-aa) scaled .2cm shifted (aa,aa);
+			endgroup;
+		enddef;
+	\stopMPdefinitions
+	\startuseMPgraphic{sumThreeSquare::one}{a,b,c,u}
+		draw_triangle(\MPvar{a}, \MPvar{b}, \MPvar{c}, \MPvar{u});
+	\stopuseMPgraphic
+	\startluacode
+		for i=1,50,1 do for j=i,50,1 do for k=j,50,1 do
+			if i*i+j*j+k*k==2021 then
+				context("\\placefigure[middle][]{$"..i.."^2+"..j.."^2+"..k.."^2=2021$}")
+				context("{\\useMPgraphic{sumThreeSquare::one}")
+				context("{a="..i..",b="..j..",c="..k..",u=.1cm}}")
+			end
+		end end end
+	\stopluacode
+\stoptext
