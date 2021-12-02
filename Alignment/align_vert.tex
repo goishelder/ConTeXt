@@ -1,0 +1,12 @@
+\def\g#1{\setbox0=\hbox{$\left(#1\right)$}%
+	\dimen66=\ht0%
+	\advance\dimen66 by -3pt%
+	g\kern-2pt\lower\dimen66\box0}
+
+\starttext
+\setupformula[align=right]
+\startformula
+\g{x}=\left({x+1\over x-1}\right)\cdot\g{x+1\over x-1}+3
+\stopformula
+Halle el valor de $\g{1\over2}$
+\stoptext
