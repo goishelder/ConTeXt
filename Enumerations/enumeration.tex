@@ -1,0 +1,116 @@
+%\definefallbackfamily [mainface] [rm] [Latin Modern] [range=miscellaneoussymbols] 
+%\definefontfamily     [mainface] [rm] [Latin Modern]
+%\setupbodyfont        [mainface]
+%
+\defineitemgroup[ltxitm][levels=2]
+%
+\setupitemgroup[ltxitm][1][n,repeat]
+\setupitemgroup[ltxitm][2][n]
+%
+\unprotect
+    
+%% the bullet: a red square
+
+\defineframed [instruction_symbol_frame] [
+  background=color,
+  backgroundcolor=gray,
+  frame=off,
+  corner=round,
+  location={height=30pt},
+  width=2em,
+  height=1em
+  %height=\framedparameter{width}, %% -> let height = width
+]
+
+%% bare bullet
+
+\definesymbol [instruction_symbol]
+  [{\instruction_symbol_frame{\strut}}]
+
+%% same bullet, with item number inside
+
+\definesymbol [instruction_symbol_numbered]
+  [{\instruction_symbol_frame{{\tfb $*$}\currentitemnumber}}]
+
+%% define the “regular“ itemization with a red box as bullet indicator
+
+\defineitemgroup [RegularList]
+\setupitemgroup [RegularList] [each] [joinedup]
+\setupitemgroup [RegularList] [symbol=instruction_symbol]
+
+%% define the “Instructions” type itemization that includes the item
+%% number inside the box
+
+\defineitemgroup [Instructions]
+\setupitemgroup [Instructions] [each] [joinedup]
+\setupitemgroup [Instructions] [symbol=instruction_symbol_numbered]
+
+\protect
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\definemathstackers[MySymbol]
+	[voffset=-.3\mathexheight,
+	hoffset=\zeropoint,
+	mathclass=ord,
+	topoffset=.4\mathemwidth, % poor man's italic correction
+	middlecommand=\mathematics]
+  
+\definemathover[MySymbol][interior]["2218] %this a small circle
+\definemathover[MySymbol][mystarred]["2217] % this is an asterisk
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% demo
+
+\starttext
+
+Here is the new command \type{\interior{K}}: $\interior{K}$. Compare this to \type{\mathring{K}}: $\mathring{K}$.
+
+Here is the new command \type{\mystarred{K}}: $\mystarred{K}$.
+
+Here are the built-in commands \type{\mathover} and \type{\mathunder}: 
+
+{\tfb {\char "2217}1{\char "2605}}<++>⍣★☆✦✪✬✸✵%⍣★☆✦✪✬✸✵U+2217
+$\mathover[symbol]{"2217}{A}$, % 2217 is an asterisk
+$\mathover[symbol]{"2218}{A}$, % 2218 is a circle
+$\mathover[symbol]{"2219}{A}$, % 2219 is a bullet
+$\mathunder[symbol]{"2217}{A}$,
+$\mathunder[symbol]{"2218}{A}$,
+$\mathunder[symbol]{"2219}{A}$.
+
+Chemicals
+  \startRegularList
+	\startitem \input knuth \stopitem
+	\startitem \input ward \stopitem
+  \stopRegularList
+
+  \blank [2*big]
+
+  Instructions
+  \startInstructions
+	\startitem \input knuth \stopitem
+	\startitem \input ward \stopitem
+  \stopInstructions
+
+\startltxitm
+\item one
+  \startltxitm
+	\item one one
+	\item one two
+  \stopltxitm
+\item two
+  \setupitemize[width=3em, lefttext=p]
+  \startitemize[a]
+	\item AA
+	  \sym{\interior{A}} foo
+	\sym{w+} foo
+	\item BB
+  \stopitemize
+  \item three
+  \startltxitm
+	\item one one
+	\item one two
+  \stopltxitm
+
+ % \showmathcharacters
+
+\stopltxitm

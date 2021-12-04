@@ -1,0 +1,55 @@
+\usemodule[visual]
+
+\definecounter[one]
+\definecounter[two]
+\definecounter[three]
+
+\def\itemM{\sym{\incrementnumber[one]%
+	(\getnumber[one].}}
+\def\iitemM{\sym{\incrementnumber[two]%
+	(\getnumber[one].\getnumber[two]}}
+\def\iiitemM{\sym{\incrementnumber[three]%
+	(\getnumber[one].\getnumber[two]-\getnumber[three]}}
+\defineitemgroup[teste]
+\setupitemgroup[teste][before={lo\ l},inbetween={$x^2$}]
+
+\starttext
+%\dorecurse{15}{
+	%\dorecurse{15}{
+		%\fakewords{5}{15}\par}}
+\startteste
+\item olalfhskhkshskhsfk
+\item sdkjksks
+\item rsjsj
+\stopteste
+\startitemize[]
+\itemM \input knuth
+\itemM \input knuth
+	\startitemize[width=2em]
+	\iitemM \input knuth
+	\iitemM \input knuth
+		\startitemize[width=3em]
+		\iiitemM \input knuth
+		\iiitemM \input knuth
+		\stopitemize
+	\iitemM \input knuth
+	\iitemM \input knuth
+	\stopitemize
+\itemM \input knuth
+	\startitemize[width=2em]
+	\iitemM \input knuth
+	\iitemM \input knuth
+	\iitemM \input knuth
+		\startitemize[width=3em]
+		\iiitemM \input knuth
+		\iiitemM \input knuth
+		\stopitemize
+	\iitemM \input knuth
+	\stopitemize
+\itemM \input knuth
+\stopitemize
+
+\stoptext
+
+
+
