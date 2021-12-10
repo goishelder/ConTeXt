@@ -1,0 +1,63 @@
+\starttext
+	\startMPcode
+		def pointS(expr x,y,z)=
+			(y-x*sqrt(2)/4,z-x*sqrt(2)/4)
+		enddef;
+		
+		def circleZ(expr n, r, z)=
+			for i=0 step 1 until n-1:
+			  pointS(r*cos(2*pi*i/n),r*sin(2*pi*i/n),z)..
+			endfor
+			cycle
+		enddef;
+
+		def esphere(expr n, m, r)=
+			for j=0 step 1 until m:
+			  draw for i=0 step 1 until n-1:
+					  pointS(r*abs(sin(pi*j/m))*cos(2*pi*i/n),
+							r*abs(sin(pi*j/m))*sin(2*pi*i/n),
+						  r*cos(pi*j/m))..
+				  endfor
+				  cycle;
+			endfor
+		enddef;
+
+
+		def esphereT(expr n, m, r)=
+			for j=0 step 1 until m-1:
+			  draw for i=0 step 1 until n-1:
+					pointS(-sin(pi*j/m)*r*cos(2*pi*i/n),
+					  cos(pi*j/m)*r*cos(2*pi*i/n),
+					r*sin(2*pi*i/n))..
+				  endfor
+				  cycle;
+			endfor
+		enddef;
+		
+		
+		% circle:
+		def MyCircle(expr n,a,b)=
+			draw for i=0 step 1 until n-1:
+				pointS(a*1/3*sin(2*pi*i/n)-b*2*sqrt(5)/30*cos(2*pi*i/n),
+					-a*2*sqrt(2)/3*sin(2*pi*i/n)-b*sqrt(10)/30*cos(2*pi*i/n),
+					b*9*sqrt(10)/30*cos(2*pi*i/n))..
+				endfor
+				cycle withcolor red;
+		enddef;
+
+		u:=1cm;
+		Xmin:=-2u; Xmax:=6u;
+		Ymin:=-4u; Ymax:=4u;
+		Zmin:=-4u; Zmax:=4u;
+		drawarrow pointS(Xmin,0,0)--pointS(Xmax,0,0);
+		drawarrow pointS(0,Ymin,0)--pointS(0,Ymax,0);
+		drawarrow pointS(0,0,Zmin)--pointS(0,0,Zmax);
+		%esphere(20,10,2u);
+		%esphereT(20,20,2u);
+		draw unitcircle scaled 4u shifted (-2u,-2u) withcolor blue;
+		draw unitcircle shifted (-.5,-.5) xscaled 1.12  rotated 45
+			scaled 4u withcolor green;
+		%MyCircle(20,2u,2.1u);
+
+	\stopMPcode
+\stoptext

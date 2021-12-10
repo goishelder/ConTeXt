@@ -1,0 +1,91 @@
+\starttext
+\startMPcode
+  def pointS = color enddef;
+  def proj(expr P) = (greenpart P-(redpart P)*sqrt(2)/4,
+	bluepart P-(redpart P)*sqrt(2)/4)
+  enddef;
+  def product(expr Q,R) = ((redpart Q)*(redpart R)+
+	(greenpart Q)*(greenpart R)+(bluepart Q)*(bluepart R))
+  enddef;
+  def plane(expr P,Q,R)=
+	proj(P)--proj(Q)--proj(R)--proj((R+P-Q))--cycle
+  enddef;
+  def esphere(expr n, m, C, r)=
+	for j=0 step 1 until m:
+	  draw for i=0 step 1 until n-1:
+			  proj(((r*abs(sin(pi*j/m))*cos(2*pi*i/n),
+					r*abs(sin(pi*j/m))*sin(2*pi*i/n),
+					r*cos(pi*j/m))+C))..
+		  endfor
+		  cycle withcolor red;
+	endfor
+  enddef;
+  def esphereT(expr n, m, C, r)=
+	for j=0 step 1 until m-1:
+	  draw for i=0 step 1 until n-1:
+			proj(((-sin(pi*j/m)*r*cos(2*pi*i/n),
+			  cos(pi*j/m)*r*cos(2*pi*i/n),
+			  r*sin(2*pi*i/n))+C))..
+		  endfor
+		  cycle withcolor red;
+	endfor
+  enddef;
+  def esphereF(expr n, m, C, r)=
+	for j=0 step 1 until m-1:
+	  draw for i=0 step 1 until n-1:
+			proj(((-sin(pi*j/m)*r*cos(pi*i/n+pi/2),
+			  cos(pi*j/m)*r*cos(pi*i/n+pi/2),
+			  r*sin(pi*i/n+pi/2))+C))--
+		  endfor
+			proj(((-sin(pi*j/m)*r*cos(pi+pi/2),
+			  cos(pi*j/m)*r*cos(pi+pi/2),
+			  r*sin(pi+pi/2))+C)) withcolor red;
+	endfor
+  enddef;
+  def esphereD(expr n, m, C, r)=
+	for j=0 step 1 until m:
+		first:=uniformdeviate(n/10);
+		last:=uniformdeviate(n/2);
+		draw for i=first step 1 until last+n/2-1:
+			  proj(((r*abs(sin(pi*j/m))*cos(pi*i/n-pi/2-pi/9),
+					r*abs(sin(pi*j/m))*sin(pi*i/n-pi/2-pi/9),
+					r*cos(pi*j/m))+C))--
+		  endfor
+		  proj(((r*abs(sin(pi*j/m))*cos(pi*(last/n+1/2)-pi/2-pi/9),
+				r*abs(sin(pi*j/m))*sin(pi*(last/n+1/2)-pi/2-pi/9),
+				r*cos(pi*j/m))+C)) withcolor red;
+	endfor
+  enddef;
+	
+  % unidade de comprimento
+  u:=1cm;
+  % valores máximos e mínimos para a representação dos eixos coordenados
+  xmin:=-u; xmax:=u; ymin:=-u; ymax:=u; zmin:=-u; zmax:=u;
+  pointS O,A,B,C,D;
+  O:=(0,0,0);
+  A:=(1,3,1)*u;
+  B:=(-1,-3,2)*u;
+  C:=(4,2,4)*u;
+  % centro da circunferência
+  numeric a,b,c;
+  0=product(A,(A/2-(a,b,c)));
+  0=product(B,(B/2-(a,b,c)));
+  0=product(C,(C/2-(a,b,c)));
+  D:=(a,b,c);
+  r:=sqrt(product(D,D));
+  % eixos coordenados
+  drawarrow proj((xmin,0,0))--proj((xmax,0,0));
+  drawarrow proj((0,ymin,0))--proj((0,ymax,0));
+  drawarrow proj((0,0,zmin))--proj((0,0,zmax));
+  draw unitcircle shifted (-.5,-.5) xscaled 1.12  rotated 45
+	scaled (2*r) shifted proj(D) withcolor red;
+  %esphereF(30,20,D,r);
+  esphereD(30,100,D,r);
+  % plano ABC
+  %draw plane(A,B,C);
+  %label.top("$A$",proj(A));
+  %label.top("$B$",proj(B));
+  %label.top("$C$",proj(C));
+  %label.top("$D$",proj(D));
+\stopMPcode
+\stoptext
