@@ -1,0 +1,24 @@
+
+\startuseMPgraphic{esfera}
+	path p;
+	p:=fullcircle xscaled 5cm yscaled 5cm;
+	circular_shade(p,1,red,blue);
+\stopuseMPgraphic
+
+\definecolor[a][red]
+\definecolor[b][blue]
+\definecolor[c][darkred]
+
+\startuseMPgraphic{circle}
+  def test_shade (expr a, b, ra, rb) =
+	pickup pencircle scaled 1mm ;
+	color ca ; ca := \MPcolor{a} ;
+	color cb ; cb := \MPcolor{b} ;
+	path pb ; pb := fullcircle scaled 1.5rb shifted b ;
+	sh := define_circular_shade(a,b,ra,rb,ca,cb) ;
+	fill pb withshade sh ;
+  enddef;
+  test_shade(origin, (.5cm,.5cm), 0, 2cm);
+\stopuseMPgraphic
+
+red: \useMPgraphic{esfera} blue:\useMPgraphic{circle}\useMPgraphic{circle}
