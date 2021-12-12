@@ -1,0 +1,49 @@
+\defineMPinstance
+	[circle]
+	[format=metafun,
+		extension=yes,
+		initializations=yes]
+
+\startMPdefinitions{circle}
+	u:=1cm;
+\stopMPdefinitions
+
+\starttext
+	\startuseMPgraphic{circle::one}{r,n}
+		draw unitcircle scaled (2u*\MPvar{r}) shifted (-u*\MPvar{r},-u*\MPvar{r});
+		step_angle:=2*pi/\MPvar{n};
+		for i=0 step 1 until (\MPvar{n}-1):
+			draw origin--(cos(step_angle*i),sin(step_angle*i)) scaled (u*\MPvar{r});
+		endfor;
+	\stopuseMPgraphic
+
+	\startuseMPgraphic{circle::two}{r,n}
+		for i=1 step 1 until \MPvar{n}:
+			draw unitcircle
+				scaled (i*\MPvar{r}) randomized (i/8*\MPvar{r})
+				shifted (-i/2*\MPvar{r},-i/2*\MPvar{r})
+				withcolor (i/\MPvar{n})*blue;
+		endfor;
+	\stopuseMPgraphic
+
+	\startuseMPgraphic{circle::three}{r,n}
+		pair list[];
+		list[0]:=origin;
+		for i=1 step 1 until \MPvar{n}:
+			list[i]:=(list[i-1]
+				shifted (uniformdeviate(\MPvar{r})-\MPvar{r}/2,
+					uniformdeviate(\MPvar{r})-\MPvar{r}/2));
+		endfor;
+		for i=1 step 1 until \MPvar{n}:
+			draw list[i-1]--list[i]
+				withcolor (i/\MPvar{n},.5-i/\MPvar{n},1-i/\MPvar{n});
+		endfor
+	\stopuseMPgraphic
+
+	%ola\useMPgraphic{circle::one}{r=1,n=16}mundo
+	%bem\useMPgraphic{circle::one}{r=1,n=26}adeus
+	%bem\useMPgraphic{circle::two}{r=2,n=50}adeus
+	1\useMPgraphic{circle::three}{r=35,n=100}
+	2\useMPgraphic{circle::three}{r=35,n=100}
+	3\useMPgraphic{circle::three}{r=35,n=100}
+\stoptext
