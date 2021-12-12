@@ -1,0 +1,25 @@
+\starttext
+
+\startuseMPgraphic{normaldeviate}
+	randomseed := 100 ;
+	draw fullcircle
+		scaled sqrt2
+		withpen pencircle scaled 1/200
+		withcolor .5white ;
+	for i=1 upto 3000 :
+		draw (normaldeviate,normaldeviate)
+			scaled 1/3
+			withpen pencircle scaled 1/30
+			withtransparency (1,.5) ;
+	endfor ;
+	setbounds currentpicture to
+		boundingbox fullcircle
+		enlarged 1/2 ;
+	currentpicture :=
+		currentpicture
+		xsized (2TextWidth/5) ;
+\stopuseMPgraphic
+
+\useMPgraphic{normaldeviate}
+
+\stoptext
