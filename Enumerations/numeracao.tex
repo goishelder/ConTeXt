@@ -1,0 +1,20 @@
+
+\starttext
+	\def\fuzzycount#1{{\tx\count1=#1 \advance\count1 by2 \ifnum5=\count1+\the\count1+\else.#1.\fi}}
+	\defineconversion[fuzzy][\fuzzycount]
+	\startitemize[fuzzy]
+	\item one
+	\item two
+	\item one
+	\item two
+	\item one
+	\item two
+	\item one
+	\item two
+	\stopitemize
+	ola
+	\the\count1\advance\count1 by5 \the\count1
+	ola\par
+	\tfa{ola} {\tfxx ola} {\tfb ola}\par
+	\tfa{ola} {\tfxx ola} \tfb ola
+\stoptext
