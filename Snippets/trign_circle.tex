@@ -1,0 +1,14 @@
+\startMPpage
+	drawfill origin--(0,-1.2cm)..(1.2cm,0)..(0,1.2cm)--cycle withcolor red;
+	clip currentpicture to unitcircle scaled 2cm shifted (-1cm,-1cm);
+	drawarrow (-1.5cm,0)--(1.5cm,0);
+	drawarrow (0,-1.5cm)--(0,1.5cm);
+	draw unitcircle scaled 2cm shifted (-1cm,-1cm);
+	label.ulft("$\frac\pi2$",(0,1cm));
+	label.llft("$-\frac\pi2$",(0,-1cm));
+	pickup pencircle scaled .5mm;
+	drawarrow (0,-1cm){dir=0}..(sqrt2*1cm/2,-sqrt2*1cm/2) withcolor blue;
+	drawarrow (sqrt2*1cm/2,-sqrt2*1cm/2)..{dir=90}(1cm,0) withcolor blue;
+	drawarrow (1cm,0){dir=90}..(sqrt2*1cm/2,sqrt2*1cm/2) withcolor blue;
+	drawarrow (sqrt2*1cm/2,sqrt2*1cm/2)..{dir=180}(0,1cm) withcolor blue;
+\stopMPpage
