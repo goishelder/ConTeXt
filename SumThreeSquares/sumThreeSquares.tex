@@ -16,7 +16,7 @@
 			else: label ("$"&decimal a&"^2$",(aa/2,aa/2)); fi
 			label ("$"&decimal b&"^2$",(aa+bb/2,-bb/2));
 			label ("$"&decimal c&"^2$",((cc/2,cc/2) transformed t));
-			label ("$2021$",(x1+(y2+x2)/2,y1+(y2-x2)/2));
+			label ("$2022$",(x1+(y2+x2)/2,y1+(y2-x2)/2));
 			if a<4: draw unitsquare scaled (aa/2) shifted (aa,0);
 			else: draw unitsquare scaled .2cm shifted (aa,0); fi
 			draw unitsquare rotated angle (bb,-aa) scaled .2cm shifted (aa,aa);
@@ -28,8 +28,8 @@
 	\stopuseMPgraphic
 	\startluacode
 		for i=1,50,1 do for j=i,50,1 do for k=j,50,1 do
-			if i*i+j*j+k*k==2021 then
-				context("\\placefigure[middle][]{$"..i.."^2+"..j.."^2+"..k.."^2=2021$}")
+			if i*i+j*j+k*k==2022 then
+				context("\\placefigure[middle][]{$"..i.."^2+"..j.."^2+"..k.."^2=2022$}")
 				context("{\\useMPgraphic{sumThreeSquare::one}")
 				context("{a="..i..",b="..j..",c="..k..",u=.1cm}}")
 			end
